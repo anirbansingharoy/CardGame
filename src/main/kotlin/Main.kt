@@ -4,4 +4,6 @@ import service.play
 fun main(){
     println("basic app")
     play(totalCardsAvailableForPlay)
+            .also { print(it.player) }
+            .also { print(it.cardsInHand) }
 }
