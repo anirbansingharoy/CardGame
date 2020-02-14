@@ -4,8 +4,10 @@ import arrow.core.Option
 import arrow.core.Option.Companion.empty
 import arrow.core.Option.Companion.just
 import arrow.core.toOption
+import domain.Player.SAM
 import domain.Rule.BLACKJACK_ON_FIRST_SHUFFLE
 import domain.Rule.BOTH_WITH_22
+import domain.Rule.SAM_GREATER_THAN_21
 
 data class Card(
         val suit: Suit,
@@ -67,7 +69,8 @@ data class PlayerHand(
 
 enum class Rule {
     BLACKJACK_ON_FIRST_SHUFFLE,
-    BOTH_WITH_22
+    BOTH_WITH_22,
+    SAM_GREATER_THAN_21
 }
 
 enum class Player {

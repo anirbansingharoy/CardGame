@@ -3,6 +3,8 @@ package domain
 import arrow.core.Option
 import arrow.core.getOrElse
 import domain.Rule.BLACKJACK_ON_FIRST_SHUFFLE
+import domain.Rule.BOTH_WITH_22
+import domain.Rule.SAM_GREATER_THAN_21
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -49,7 +51,19 @@ internal class GameRuleTest {
         val playerDealerHand = PlayerHand(Player.DEALER, setOf(Card(Suit.HEARTS, Value.ACE),
                 Card(Suit.CLUBS, Value.ACE)))
 
-        assertThat(applyGameRuleAndGetWinner(Rule.BOTH_WITH_22, listOf(playerSamHand, playerDealerHand)).getOrElse { null })
+        assertThat(applyGameRuleAndGetWinner(BOTH_WITH_22, listOf(playerSamHand, playerDealerHand)).getOrElse { null })
+                .isNotNull
+                .hasFieldOrPropertyWithValue("player", Player.DEALER)
+    }
+
+    @Test
+    fun `should return DEALER's hand if sam is having greater than 21 score in hand`() {
+        val playerSamHand = PlayerHand(Player.SAM, setOf(Card(Suit.HEARTS, Value.ACE),
+                Card(Suit.CLUBS, Value._9), Card(Suit.CLUBS, Value._8) ))
+        val playerDealerHand = PlayerHand(Player.DEALER, setOf(Card(Suit.HEARTS, Value.ACE),
+                Card(Suit.CLUBS, Value._8), Card(Suit.CLUBS, Value._5)))
+
+        assertThat(applyGameRuleAndGetWinner(SAM_GREATER_THAN_21, listOf(playerSamHand, playerDealerHand)).getOrElse { null })
                 .isNotNull
                 .hasFieldOrPropertyWithValue("player", Player.DEALER)
     }
