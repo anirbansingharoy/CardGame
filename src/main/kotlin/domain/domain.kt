@@ -17,7 +17,7 @@ data class Card(
         val value: Value
 ) {
     override fun toString(): String {
-        return this.suit.referenceCode.plus(this.value.weight)
+        return this.suit.referenceCode.plus(this.value.referenceCode)
     }
 }
 
@@ -41,7 +41,7 @@ enum class Suit(val referenceCode: String) {
     }
 }
 
-enum class Value(private val referenceCode: String, val weight: Int) {
+enum class Value(val referenceCode: String, val weight: Int) {
     _2("2", 2),
     _3("3", 3),
     _4("4", 4),
