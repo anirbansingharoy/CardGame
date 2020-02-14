@@ -15,7 +15,11 @@ import domain.Rule.SAM_GREATER_THAN_21
 data class Card(
         val suit: Suit,
         val value: Value
-)
+) {
+    override fun toString(): String {
+        return this.suit.referenceCode.plus(this.value.weight)
+    }
+}
 
 data class Board(
         val cardsInGame: MutableList<Card>
@@ -25,14 +29,19 @@ data class Board(
     }
 }
 
-enum class Suit(val code: String) {
+enum class Suit(val referenceCode: String) {
     CLUBS("C"),
     DIAMONDS("D"),
     HEARTS("H"),
-    SPADES("S")
+    SPADES("S");
+    companion object {
+        fun getSuit(suit: Char): Option<Suit> {
+            return values().find { it.referenceCode == suit.toString() }.toOption()
+        }
+    }
 }
 
-enum class Value(val referenceCode: String, val weight: Int) {
+enum class Value(private val referenceCode: String, val weight: Int) {
     _2("2", 2),
     _3("3", 3),
     _4("4", 4),
@@ -45,7 +54,13 @@ enum class Value(val referenceCode: String, val weight: Int) {
     JACK("J", 10),
     QUEEN("Q", 10),
     KING("K", 10),
-    ACE("A", 11)
+    ACE("A", 11);
+
+    companion object {
+        fun getValue(value: String): Option<Value> {
+            return values().find { it.referenceCode == value.toString() }.toOption()
+        }
+    }
 }
 
 data class PlayerHand(

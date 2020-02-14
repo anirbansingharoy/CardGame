@@ -86,7 +86,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        Main
+                                        MainKt
                                     </mainClass>
                                 </manifest>
                             </archive>
