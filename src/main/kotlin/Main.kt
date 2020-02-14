@@ -22,8 +22,8 @@ fun main(args: Array<String>) {
 
     play(cardsInTheGame.filterNotNull().toSet().toList().shuffled())
             .also { print("Printing Results \n") }
-            .also { print(it.player.name.plus(" :")) }
-            .also { print(it.cardsInHand) }
+            .also { print(it.first.player.name) }
+            .also { result -> print(result.second.forEach { print("\n".plus(it.toString()))}) }
 }
 
 fun readFileInput(filePath: String): List<Card?> {

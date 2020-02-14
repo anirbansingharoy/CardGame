@@ -58,7 +58,7 @@ enum class Value(val referenceCode: String, val weight: Int) {
 
     companion object {
         fun getValue(value: String): Option<Value> {
-            return values().find { it.referenceCode == value.toString() }.toOption()
+            return values().find { it.referenceCode == value }.toOption()
         }
     }
 }
@@ -82,6 +82,10 @@ data class PlayerHand(
             .and(this.score == 21)
             .and(this.contains(Value.ACE)
                     .and(this.containsAnyOf(listOf(Value._10, Value.JACK, Value.QUEEN, Value.KING))))
+
+    override fun toString() : String {
+        return this.player.name.plus(this.cardsInHand.map { it.toString() })
+    }
 
 }
 
