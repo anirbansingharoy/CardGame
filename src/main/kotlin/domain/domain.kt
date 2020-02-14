@@ -84,7 +84,7 @@ data class PlayerHand(
                     .and(this.containsAnyOf(listOf(Value._10, Value.JACK, Value.QUEEN, Value.KING))))
 
     override fun toString() : String {
-        return this.player.name.plus(this.cardsInHand.map { it.toString() })
+        return this.player.name.plus(" : ").plus(this.cardsInHand.map { it.toString() })
     }
 
 }

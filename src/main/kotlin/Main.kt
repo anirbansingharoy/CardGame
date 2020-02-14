@@ -8,22 +8,22 @@ import service.play
 import java.io.File
 
 fun main(args: Array<String>) {
-    println("Welcome to Card Game")
+    println("####### Welcome to Card Game ########")
     val cardsInTheGame = when (args.isEmpty()) {
         true -> totalCardsAvailableForPlay
         false -> readFileInput(args[0])
-
     }
     if (cardsInTheGame.any { it == null }.or(cardsInTheGame.isEmpty())) {
         return
     }
-    print("Cards in Game \n")
-    cardsInTheGame.filterNotNull().forEach { print(it).also { print("\n") } }
+    print("\n******** Cards in Game ******** \n")
+    cardsInTheGame.filterNotNull().forEach { print(it).also { print(", ") } }.also { print("\n\n") }
 
     play(cardsInTheGame.filterNotNull().toSet().toList().shuffled())
-            .also { print("Printing Results \n") }
+            .also { print("******** Printing Results ********* \n") }
             .also { print(it.first.player.name) }
-            .also { result -> print(result.second.forEach { print("\n".plus(it.toString()))}) }
+            .also { result -> result.second.forEach { print("\n".plus(it)) } }
+            .also { print("\n".plus("******** Game Ends ********* ")) }
 }
 
 fun readFileInput(filePath: String): List<Card?> {
