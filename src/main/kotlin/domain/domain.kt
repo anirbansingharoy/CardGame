@@ -101,3 +101,57 @@ enum class Player {
     SAM,
     DEALER
 }
+
+val totalCardsAvailableForPlay: List<Card>
+    get() = Suit.values()
+            .flatMap { suit ->
+                Value.values()
+                        .map { Card(suit, it) }
+            }
+            .shuffled()
+
+fun applyGameRuleAndGetWinner(rule: Rule, playerHands: List<PlayerHand>): Option<Pair<PlayerHand, List<PlayerHand>>> {
+    return when (rule) {
+        BLACKJACK_ON_FIRST_SHUFFLE -> playerHands
+                .filter { it.hasBlackJack }
+                .let { playersWithBlackJack ->
+                    if (playersWithBlackJack.isEmpty()) {
+                        return empty()
+                    }
+                    if (playersWithBlackJack.size == 1) {
+                        return just(playersWithBlackJack[0]).map { Pair(it, playerHands) }
+                    }
+                    playerHands
+                            .find { it.player == SAM }
+                            .toOption()
+                            .map { Pair(it, playerHands) }
+                }
+        BOTH_WITH_22 -> if (playerHands.all { it.score == 22 }) {
+            playerHands
+                    .find { it.player == DEALER }
+                    .toOption()
+                    .map { Pair(it, playerHands) }
+        } else {
+            empty()
+        }
+        SAM_GREATER_THAN_21 -> if (playerHands.first { it.player == SAM }.score > 21) {
+            playerHands
+                    .first { it.player == DEALER }
+                    .toOption()
+                    .map { Pair(it, playerHands) }
+        } else {
+            empty()
+        }
+        DEALER_GREATER_THAN_21 -> if (playerHands.first { it.player == DEALER }.score > 21) {
+            playerHands
+                    .first { it.player == SAM }
+                    .toOption()
+                    .map { Pair(it, playerHands) }
+        } else {
+            empty()
+        }
+        HIGHEST_SCORE -> playerHands.sortedByDescending { it.score }[0]
+                .toOption()
+                .map { Pair(it, playerHands) }
+    }
+}
