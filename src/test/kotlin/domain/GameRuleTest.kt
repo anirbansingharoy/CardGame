@@ -22,7 +22,7 @@ internal class GameRuleTest {
                 Card(Suit.CLUBS, Value._10)))
 
         assertThat(applyGameRuleAndGetWinner(BLACKJACK_ON_FIRST_SHUFFLE, listOf(playerSamHand, playerDealerHand)))
-                .isEqualTo(Option.empty<Pair<PlayerHand, List<PlayerHand>>>())
+                .isEqualTo(Option.empty<Pair<Player, List<PlayerHand>>>())
     }
 
     @Test
@@ -34,7 +34,7 @@ internal class GameRuleTest {
 
         assertThat(applyGameRuleAndGetWinner(BLACKJACK_ON_FIRST_SHUFFLE, listOf(playerSamHand, playerDealerHand)))
                 .isNotNull
-                .isEqualTo(Option.just(Pair(playerDealerHand, listOf(playerSamHand, playerDealerHand))))
+                .isEqualTo(Option.just(Pair(DEALER, listOf(playerSamHand, playerDealerHand))))
     }
 
     @Test
@@ -46,7 +46,7 @@ internal class GameRuleTest {
 
         assertThat(applyGameRuleAndGetWinner(BLACKJACK_ON_FIRST_SHUFFLE, listOf(playerSamHand, playerDealerHand)))
                 .isNotNull
-                .isEqualTo(Option.just(Pair(playerSamHand, listOf(playerSamHand, playerDealerHand))))
+                .isEqualTo(Option.just(Pair(SAM, listOf(playerSamHand, playerDealerHand))))
     }
     @Test
     fun `should return DEALER's hand if both having 22 as their hand score`() {
@@ -57,7 +57,7 @@ internal class GameRuleTest {
 
         assertThat(applyGameRuleAndGetWinner(BOTH_WITH_22, listOf(playerSamHand, playerDealerHand)))
                 .isNotNull
-                .isEqualTo(Option.just(Pair(playerDealerHand, listOf(playerSamHand, playerDealerHand))))
+                .isEqualTo(Option.just(Pair(DEALER, listOf(playerSamHand, playerDealerHand))))
     }
 
     @Test
@@ -69,7 +69,7 @@ internal class GameRuleTest {
 
         assertThat(applyGameRuleAndGetWinner(SAM_GREATER_THAN_21, listOf(playerSamHand, playerDealerHand)))
                 .isNotNull
-                .isEqualTo(Option.just(Pair(playerDealerHand, listOf(playerSamHand, playerDealerHand))))
+                .isEqualTo(Option.just(Pair(DEALER, listOf(playerSamHand, playerDealerHand))))
     }
 
     @Test
@@ -81,7 +81,7 @@ internal class GameRuleTest {
 
         assertThat(applyGameRuleAndGetWinner(DEALER_GREATER_THAN_21, listOf(playerSamHand, playerDealerHand)))
                 .isNotNull
-                .isEqualTo(Option.just(Pair(playerSamHand, listOf(playerSamHand, playerDealerHand))))
+                .isEqualTo(Option.just(Pair(SAM, listOf(playerSamHand, playerDealerHand))))
     }
 
     @Test
@@ -93,6 +93,6 @@ internal class GameRuleTest {
 
         assertThat(applyGameRuleAndGetWinner(HIGHEST_SCORE, listOf(playerSamHand, playerDealerHand)))
                 .isNotNull
-                .isEqualTo(Option.just(Pair(playerDealerHand, listOf(playerSamHand, playerDealerHand))))
+                .isEqualTo(Option.just(Pair(DEALER, listOf(playerSamHand, playerDealerHand))))
     }
 }

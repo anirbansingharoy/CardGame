@@ -14,7 +14,7 @@ import domain.Rule.HIGHEST_SCORE
 import domain.Rule.SAM_GREATER_THAN_21
 import domain.applyGameRuleAndGetWinner
 
-fun play(cards: List<Card>): Pair<PlayerHand, List<PlayerHand>> {
+fun play(cards: List<Card>): Pair<Player, List<PlayerHand>> {
     val board = Board(cards.toMutableList())
     val playersHands = distributeFirstRound(board, listOf(SAM, DEALER))
 

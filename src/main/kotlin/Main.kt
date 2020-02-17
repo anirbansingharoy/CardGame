@@ -21,7 +21,7 @@ fun main(args: Array<String>) {
 
     play(cardsInTheGame.filterNotNull().toSet().toList().shuffled())
             .also { print("******** Printing Results ********* \n") }
-            .also { print(it.first.player.name) }
+            .also { print(it.first.name) }
             .also { result -> result.second.forEach { print("\n".plus(it)) } }
             .also { print("\n".plus("******** Game Ends ********* ")) }
 }
