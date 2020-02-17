@@ -24,7 +24,7 @@ internal class CardGameServiceTest {
     fun `should return results based on blackjack rule`() {
         val cardsInGame = listOf(Card(HEARTS, KING),
                 Card(CLUBS, _9), Card(CLUBS, ACE), Card(CLUBS, _5))
-        assertThat(play(cardsInGame))
+        assertThat(play(cardsInGame).first)
                 .isEqualTo(PlayerHand(SAM, setOf(Card(HEARTS, KING), Card(CLUBS, ACE))))
     }
 
@@ -32,7 +32,7 @@ internal class CardGameServiceTest {
     fun `should return results based on 22 rule`() {
         val cardsInGame = listOf(Card(HEARTS, ACE),
                 Card(CLUBS, ACE), Card(SPADES, ACE), Card(DIAMONDS, ACE))
-        assertThat(play(cardsInGame))
+        assertThat(play(cardsInGame).first)
                 .isEqualTo(PlayerHand(DEALER, setOf(Card(CLUBS, ACE), Card(DIAMONDS, ACE))))
     }
 
@@ -40,7 +40,7 @@ internal class CardGameServiceTest {
     fun `should return results based on rule of 21 after sam took his set of cards from the deck`() {
         val cardsInGame = listOf(Card(HEARTS, _2),
                 Card(CLUBS, _2), Card(SPADES, _3), Card(DIAMONDS, _5), Card(SPADES, ACE), Card(CLUBS, ACE))
-        assertThat(play(cardsInGame))
+        assertThat(play(cardsInGame).first)
                 .isEqualTo(PlayerHand(DEALER, setOf(Card(CLUBS, _2), Card(DIAMONDS, _5))))
     }
 
@@ -48,7 +48,7 @@ internal class CardGameServiceTest {
     fun `should return results based on rule of 21 after dealer took his set of cards from the deck`() {
         val cardsInGame = listOf(Card(HEARTS, _2),
                 Card(CLUBS, _2), Card(SPADES, _3), Card(DIAMONDS, _5), Card(SPADES, ACE), Card(SPADES, _2), Card(HEARTS, ACE),Card(HEARTS, _4))
-        assertThat(play(cardsInGame))
+        assertThat(play(cardsInGame).first)
                 .isEqualTo(PlayerHand(SAM, setOf(Card(HEARTS, _2), Card(SPADES, _3), Card(SPADES, ACE), Card(SPADES, _2))))
     }
 
@@ -56,7 +56,7 @@ internal class CardGameServiceTest {
     fun `should return results based on highest score hand after dealer took his set of cards from the deck`() {
         val cardsInGame = listOf(Card(HEARTS, _2),
                 Card(CLUBS, _2), Card(SPADES, _3), Card(DIAMONDS, _5), Card(SPADES, ACE), Card(SPADES, _2), Card(HEARTS, ACE),Card(SPADES, _2))
-        assertThat(play(cardsInGame))
+        assertThat(play(cardsInGame).first)
                 .isEqualTo(PlayerHand(DEALER, setOf(Card(CLUBS, _2), Card(DIAMONDS, _5), Card(HEARTS, ACE),Card(SPADES, _2))))
     }
 }

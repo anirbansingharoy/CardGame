@@ -22,7 +22,7 @@ internal class GameRuleTest {
                 Card(Suit.CLUBS, Value._10)))
 
         assertThat(applyGameRuleAndGetWinner(BLACKJACK_ON_FIRST_SHUFFLE, listOf(playerSamHand, playerDealerHand)))
-                .isEqualTo(Option.empty<PlayerHand>())
+                .isEqualTo(Option.empty<Pair<PlayerHand, List<PlayerHand>>>())
     }
 
     @Test
@@ -32,9 +32,9 @@ internal class GameRuleTest {
         val playerDealerHand = PlayerHand(DEALER, setOf(Card(Suit.HEARTS, Value.ACE),
                 Card(Suit.CLUBS, Value._10)))
 
-        assertThat(applyGameRuleAndGetWinner(BLACKJACK_ON_FIRST_SHUFFLE, listOf(playerSamHand, playerDealerHand)).getOrElse { null })
+        assertThat(applyGameRuleAndGetWinner(BLACKJACK_ON_FIRST_SHUFFLE, listOf(playerSamHand, playerDealerHand)))
                 .isNotNull
-                .hasFieldOrPropertyWithValue("player", DEALER)
+                .isEqualTo(Option.just(Pair(playerDealerHand, listOf(playerSamHand, playerDealerHand))))
     }
 
     @Test
@@ -44,9 +44,9 @@ internal class GameRuleTest {
         val playerDealerHand = PlayerHand(DEALER, setOf(Card(Suit.HEARTS, Value.ACE),
                 Card(Suit.CLUBS, Value._10)))
 
-        assertThat(applyGameRuleAndGetWinner(BLACKJACK_ON_FIRST_SHUFFLE, listOf(playerSamHand, playerDealerHand)).getOrElse { null })
+        assertThat(applyGameRuleAndGetWinner(BLACKJACK_ON_FIRST_SHUFFLE, listOf(playerSamHand, playerDealerHand)))
                 .isNotNull
-                .hasFieldOrPropertyWithValue("player", SAM)
+                .isEqualTo(Option.just(Pair(playerSamHand, listOf(playerSamHand, playerDealerHand))))
     }
     @Test
     fun `should return DEALER's hand if both having 22 as their hand score`() {
@@ -55,9 +55,9 @@ internal class GameRuleTest {
         val playerDealerHand = PlayerHand(DEALER, setOf(Card(Suit.HEARTS, Value.ACE),
                 Card(Suit.CLUBS, Value.ACE)))
 
-        assertThat(applyGameRuleAndGetWinner(BOTH_WITH_22, listOf(playerSamHand, playerDealerHand)).getOrElse { null })
+        assertThat(applyGameRuleAndGetWinner(BOTH_WITH_22, listOf(playerSamHand, playerDealerHand)))
                 .isNotNull
-                .hasFieldOrPropertyWithValue("player", DEALER)
+                .isEqualTo(Option.just(Pair(playerDealerHand, listOf(playerSamHand, playerDealerHand))))
     }
 
     @Test
@@ -67,9 +67,9 @@ internal class GameRuleTest {
         val playerDealerHand = PlayerHand(DEALER, setOf(Card(Suit.HEARTS, Value.ACE),
                 Card(Suit.CLUBS, Value._8), Card(Suit.CLUBS, Value._5)))
 
-        assertThat(applyGameRuleAndGetWinner(SAM_GREATER_THAN_21, listOf(playerSamHand, playerDealerHand)).getOrElse { null })
+        assertThat(applyGameRuleAndGetWinner(SAM_GREATER_THAN_21, listOf(playerSamHand, playerDealerHand)))
                 .isNotNull
-                .hasFieldOrPropertyWithValue("player", DEALER)
+                .isEqualTo(Option.just(Pair(playerDealerHand, listOf(playerSamHand, playerDealerHand))))
     }
 
     @Test
@@ -79,9 +79,9 @@ internal class GameRuleTest {
         val playerSamHand = PlayerHand(SAM, setOf(Card(Suit.HEARTS, Value.ACE),
                 Card(Suit.CLUBS, Value._8), Card(Suit.CLUBS, Value._5)))
 
-        assertThat(applyGameRuleAndGetWinner(DEALER_GREATER_THAN_21, listOf(playerSamHand, playerDealerHand)).getOrElse { null })
+        assertThat(applyGameRuleAndGetWinner(DEALER_GREATER_THAN_21, listOf(playerSamHand, playerDealerHand)))
                 .isNotNull
-                .hasFieldOrPropertyWithValue("player", SAM)
+                .isEqualTo(Option.just(Pair(playerSamHand, listOf(playerSamHand, playerDealerHand))))
     }
 
     @Test
@@ -91,8 +91,8 @@ internal class GameRuleTest {
         val playerSamHand = PlayerHand(SAM, setOf(Card(Suit.HEARTS, Value.ACE),
                 Card(Suit.CLUBS, Value._8), Card(Suit.CLUBS, Value._5)))
 
-        assertThat(applyGameRuleAndGetWinner(HIGHEST_SCORE, listOf(playerSamHand, playerDealerHand)).getOrElse { null })
+        assertThat(applyGameRuleAndGetWinner(HIGHEST_SCORE, listOf(playerSamHand, playerDealerHand)))
                 .isNotNull
-                .hasFieldOrPropertyWithValue("player", DEALER)
+                .isEqualTo(Option.just(Pair(playerDealerHand, listOf(playerSamHand, playerDealerHand))))
     }
 }
