@@ -108,7 +108,6 @@ val totalCardsAvailableForPlay: List<Card>
                 Value.values()
                         .map { Card(suit, it) }
             }
-            .shuffled()
 
 fun applyGameRuleAndGetWinner(rule: Rule, playerHands: List<PlayerHand>): Option<Pair<Player, List<PlayerHand>>> {
     return when (rule) {

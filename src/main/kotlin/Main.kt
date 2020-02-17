@@ -19,7 +19,7 @@ fun main(args: Array<String>) {
     print("\n******** Cards in Game ******** \n")
     cardsInTheGame.filterNotNull().forEach { print(it).also { print(", ") } }.also { print("\n\n") }
 
-    play(cardsInTheGame.filterNotNull().toSet().toList().shuffled())
+    play(cardsInTheGame.filterNotNull().toSet().toList().shuffled().also { print("******** Shuffled Cards Before Entering the Game ******** \n") })
             .also { print("******** Printing Results ********* \n") }
             .also { print(it.first.name) }
             .also { result -> result.second.forEach { print("\n".plus(it)) } }
