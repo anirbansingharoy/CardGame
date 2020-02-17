@@ -32,6 +32,7 @@ fun readFileInput(filePath: String): List<Card?> {
 
 fun parseFileInput(it: String): List<Card?> {
     return it.split(",")
+            .map { it.trim() }
             .map { cards ->
                 cards.isEmpty().let {
                     if (it) {

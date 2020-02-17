@@ -3,12 +3,21 @@ import domain.Suit
 import domain.Value
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.io.File
 
 internal class FileParserTest(){
     @Test
     fun `should read comma separated cards from text file`() {
         assertThat(parseFileInput("H9,SA"))
+                .hasSize(2)
+                .satisfies {
+                    assertThat(it.any { card -> card == null })
+                            .isFalse()
+                }
+    }
+
+    @Test
+    fun `should trim the card inputs before parsing`() {
+        assertThat(parseFileInput("H9    ,    SA     "))
                 .hasSize(2)
                 .satisfies {
                     assertThat(it.any { card -> card == null })
