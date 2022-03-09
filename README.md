@@ -1,4 +1,4 @@
-#Background
+# Background
 
 This is a CardGame application. There are two players in the game SAM and DEALER. The game will be played with the given set of cards provided in command line. If no cards provided, then the game will be played with all 52 cards.
 
@@ -23,7 +23,7 @@ The score of individual cards are as follows for all Suits (CLUBS, DIAMONDS, HEA
 
 The format for the command line input is as follows: H2(2 of Hearts), CJ(Jack of Clubs), DQ (Queen of Diamonds)
 
-##Rules
+## Rules
 
 - At first, two rounds will be distributed to the players. (1 card each time in one round)
 - After first two round of distribution if there is a BlackJack, the player with BlackJack will win. If both of them have BlackJack, then SAM wins. (Rule for BlackJack:  The score of the hand should be 21 . The Hand should contain ACE and any one of 10, JACK,QUEEN,KING)
